@@ -1,0 +1,55 @@
+
+.morph-carousel-stage {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.morph-carousel {
+  position: relative;
+  margin: 0 auto;
+  height: 200px;
+  width: 200px;
+  user-select: none;
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.morph-carousel__item {
+  position: absolute;
+  height: auto;
+  box-sizing: border-box;
+  backface-visibility: hidden;
+}
+
+
+@keyframes spin {
+  from { transform: rotateY(0); }
+  to   { transform: rotateY(-360deg); }
+}
+
+
+/*
+  Radius calculation:
+  1) angle = 360 / number of items = 360 / 12 = 30
+  2) angle / 2 = 30 / 2 = 15
+  3) item-width / 2 = 200 / 2 = 100
+  4) radius = 100 / tan (15) = 373
+  @source https://24ways.org/2010/intro-to-css-3d-transforms/
+ */
+
+//.morph-carousel__item {
+//  &:nth-child(1) { transform: translateZ(@radius); }
+//  &:nth-child(2) { transform: rotateY(30deg) translateZ(@radius); }
+//  &:nth-child(3) { transform: rotateY(60deg) translateZ(@radius); }
+//  &:nth-child(4) { transform: rotateY(90deg) translateZ(@radius); }
+//  &:nth-child(5) { transform: rotateY(120deg) translateZ(@radius); }
+//  &:nth-child(6) { transform: rotateY(150deg) translateZ(@radius); }
+//  &:nth-child(7) { transform: rotateY(180deg) translateZ(@radius); }
+//  &:nth-child(8) { transform: rotateY(210deg) translateZ(@radius); }
+//  &:nth-child(9) { transform: rotateY(-120deg) translateZ(@radius); }
+//  &:nth-child(10) { transform: rotateY(-90deg) translateZ(@radius); }
+//  &:nth-child(11) { transform: rotateY(300deg) translateZ(@radius); }
+//  &:nth-child(12) { transform: rotateY(330deg) translateZ(@radius); }
+//}
+
