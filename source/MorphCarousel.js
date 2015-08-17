@@ -18,12 +18,21 @@
     // current position of carousel rotation
     var carouselRotateAngle = 0;
 
+    // Main object
     var MorphCarousel = {};
 
+    /**
+     * Initialization
+     * @param _stageEl
+     * @param options
+     * @returns {object}
+     * @constructor
+     */
     root.MorphCarousel = function( _stageEl, options ) {
         var itemsList,
             angleRad,
             itemWidth,
+            itemHeight,
             radius;
 
         mergeOptions(options);
@@ -50,9 +59,18 @@
             itemsList[i].style.width = itemWidth + 'px';
         }
 
+        itemHeight = itemsList[0].offsetHeight +'px';
+        stageEl.style.height = itemHeight;
+        carouselEl.style.height = itemHeight;
+        carouselEl.style.width = itemWidth + 'px';
+
         return MorphCarousel;
     };
 
+    /**
+     * Attaching hammer JS events
+     * @param itemsAmount
+     */
     function attachHammerEvents( itemsAmount ) {
         var hammertime = new Hammer(stageEl);
         var currentAngle = 0;
