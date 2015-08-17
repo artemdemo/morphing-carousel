@@ -40,13 +40,14 @@
         // Angle (half of it) in radians
         angleRad = (minRotateAngle / 2) * Math.PI / 180;
 
-        radius = (MorphCarousel.options.itemWidth / 2) / Math.tan(angleRad);
-        console.log(radius);
+        radius = stageEl.offsetWidth / 2;
+
+        itemWidth = radius * Math.sin(angleRad) * 2;
 
         for (var i=0, len=itemsList.length; i<len; i++) {
             var _angle = i * minRotateAngle;
             itemsList[i].style.setProperty('transform', 'rotateY('+ _angle +'deg) translateZ('+ radius +'px)', null);
-            itemsList[i].style.width = MorphCarousel.options.itemWidth + 'px';
+            itemsList[i].style.width = itemWidth + 'px';
         }
 
         return MorphCarousel;
