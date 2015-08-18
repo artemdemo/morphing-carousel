@@ -16,13 +16,13 @@ Currently supported modern browsers only (about 63% globally):
 
 ## Usage examples
 
-```
+```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js" type="text/javascript"></script>
 <script src="MorphCarousel.js" type="text/javascript"></script>
 <link href="MorphCarousel.css" type="text/css" rel="stylesheet" />
 ```
 
-```
+```javascript
 <div id="carousel" class="morph-carousel-stage">
     <div class="morph-carousel__shadow"></div>
     <div class="morph-carousel">
@@ -45,7 +45,7 @@ Currently supported modern browsers only (about 63% globally):
 </div>
 ```
 
-```
+```javascript
 MorphCarousel( document.getElementById('carousel'), {
     onStop: function( itemIndex, el ){
         console.log('stopped on item # ', itemIndex);
