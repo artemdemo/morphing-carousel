@@ -22,7 +22,7 @@ Currently supported modern browsers only (about 63% globally):
 <link href="MorphCarousel.css" type="text/css" rel="stylesheet" />
 ```
 
-```javascript
+```html
 <div id="carousel" class="morph-carousel-stage">
     <div class="morph-carousel__shadow"></div>
     <div class="morph-carousel">
