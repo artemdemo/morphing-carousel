@@ -6,36 +6,40 @@
     var root = this,
         previous = root.MorphCarousel;
 
-    var defaultOptions = {
-        itemWidth: 200
+    var options = {
+        onStop: null,
+        onDragging: null,
+        onAnimating: null
     };
 
     var stageEl = null;
     var carouselEl = null;
+    var itemsList = null;
 
     var minRotateAngle = 0;
 
     // current position of carousel rotation
     var carouselRotateAngle = 0;
 
+    var isDragging = false;
+
     // Main object
-    var MorphCarousel = {};
+    var MorphCarousel;
 
     /**
      * Initialization
      * @param _stageEl
-     * @param options
+     * @param _options
      * @returns {object}
      * @constructor
      */
-    root.MorphCarousel = function( _stageEl, options ) {
-        var itemsList,
-            angleRad,
+    root.MorphCarousel = function( _stageEl, _options ) {
+        var angleRad,
             itemWidth,
             itemHeight,
             radius;
 
-        mergeOptions(options);
+        mergeOptions(_options);
 
         stageEl = _stageEl;
 
@@ -77,30 +81,55 @@
         var len = Math.ceil(itemsAmount / 2);
         hammertime.on('pan', function(ev) {
             currentAngle = carouselRotateAngle + ev.deltaX / stageEl.offsetWidth * ( minRotateAngle * len );
+            isDragging = true;
             setRotation( currentAngle );
+            if ( !! options.onDragging ) options.onDragging.call(this, currentAngle);
         });
         hammertime.on('panend', function(ev) {
-            finishAnimation(ev.velocityX);
-            currentAngle = normalizeAngle( currentAngle );
+            isDragging = false;
+            currentAngle = stabilizeAngle( currentAngle );
             setRotation( currentAngle );
             carouselRotateAngle = currentAngle;
+            finishAnimation(ev.velocityX);
+        });
+        hammertime.on('pancancel', function(ev) {
+            isDragging = false;
         });
     }
 
     /**
-     * Normalize given angle to the closest one, based on minRotateAngle
+     * Stabilize given angle to the closest one, based on minRotateAngle
      * @param angle
      * @returns {number}
      */
-    function normalizeAngle( angle ) {
-        var angleF = Math.floor(angle / minRotateAngle) * minRotateAngle;
-        var angleS = angleF + minRotateAngle;
+    function stabilizeAngle( angle ) {
+        var mod = Math.floor(angle / minRotateAngle),
+            angleF = mod * minRotateAngle,
+            angleS = angleF + minRotateAngle;
         switch (true) {
             case angle - angleF > angleS - angle:
                 return angleS;
             default:
                 return angleF;
         }
+    }
+
+    /**
+     * Normalize angle into range between 0 and 360. Converts invalid angle to 0.
+     * @param angle
+     * @returns {number}
+     */
+    function normalizeAngle( angle ) {
+        var result;
+        if (angle == null) {
+            angle = 0;
+        }
+        result = isNaN(angle) ? 0 : angle;
+        result %= 360;
+        if (result < 0) {
+            result += 360;
+        }
+        return result;
     }
 
     /**
@@ -112,22 +141,39 @@
      */
     function finishAnimation( velocity ) {
         var direction = velocity < 0 ? 1 : -1;
-        var endAngle = normalizeAngle( Math.abs(velocity) * minRotateAngle );
+        var endAngle = stabilizeAngle( Math.abs(velocity) * minRotateAngle );
         var angle = 0;
         var currentAngle = 0;
         var last = +new Date();
         var speed = 500; // how much time will take animation
         var tick = function() {
+
+            if ( isDragging ) return false;
+
             angle += direction * endAngle * (new Date() - last) / speed;
             last = +new Date();
             currentAngle = carouselRotateAngle + angle;
             setRotation( currentAngle );
+
+            if ( !! options.onAnimating ) options.onAnimating.call(this, currentAngle);
+
             if (Math.abs(angle) < endAngle) {
                 (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
             } else {
-                currentAngle = normalizeAngle( currentAngle );
+                currentAngle = stabilizeAngle( currentAngle );
                 setRotation( currentAngle );
                 carouselRotateAngle = currentAngle;
+
+                if ( !! options.onAnimating ) options.onAnimating.call(this, currentAngle);
+
+                if ( !! options.onStop ) {
+                    var itemIndex,
+                        el;
+                    itemIndex = normalizeAngle(carouselRotateAngle) / minRotateAngle;
+                    itemIndex = itemIndex > 0 ? 360 / minRotateAngle - itemIndex : itemIndex;
+                    el = itemsList[itemIndex];
+                    options.onStop.call(this, itemIndex, el);
+                }
             }
         };
         tick()
@@ -141,12 +187,8 @@
         carouselEl.style.setProperty('transform', 'rotateY('+ angle +'deg)', null);
     }
 
-    /**
-     * Merge default options with provided
-     * @param options
-     */
-    function mergeOptions( options ) {
-        MorphCarousel.options = defaultOptions;
+    function mergeOptions(_options) {
+        options = _options;
     }
 
 }).call(this);

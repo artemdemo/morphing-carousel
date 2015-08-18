@@ -55,9 +55,20 @@
 
     <script type="text/javascript">
         window.addEventListener("load", function load(event){
-            window.removeEventListener("load", load, false); //remove listener, no longer needed
-            console.log('loaded');
-            MorphCarousel( document.getElementById('carousel') )
+            window.removeEventListener("load", load, false);
+
+            MorphCarousel( document.getElementById('carousel'), {
+                onStop: function( itemIndex, el ){
+                    console.log('stopped on item # ', itemIndex);
+                    console.log('current element: ', el);
+                },
+                onDragging: function( angle ) {
+                    console.log('is dragging');
+                },
+                onAnimating: function( angle ) {
+                    console.log('is animating');
+                }
+            });
         },false);
 
     </script>
