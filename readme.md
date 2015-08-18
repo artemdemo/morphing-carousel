@@ -2,6 +2,8 @@
 
 Morphing carousel, that utilises 3D transformation of CSS3 in order to create "wheel" effect.
 
+![alt tag](https://github.com/artemdemo/morphing-carousel/blob/master/img/morphing-carousel.png)
+
 ## Dependencies
 * Hammer.js - http://hammerjs.github.io/
 
