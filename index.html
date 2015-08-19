@@ -16,12 +16,21 @@
         }
         .container {
             width: 500px;
-            margin: 100px auto 0 auto;
+            margin: 100px auto 20px auto;
         }
         .morph-carousel__item {
             text-align: center;
             font-size: 40pt;
             color: #232323;
+        }
+
+        #carousel-numbers .morph-carousel__item {
+            font-size: 40pt;
+        }
+
+        #carousel-words .morph-carousel__item {
+            font-size: 20pt;
+            line-height: 60px;
         }
 
         @media (max-width: 500px) {
@@ -37,7 +46,7 @@
 
     <div class="container">
 
-        <div id="carousel" class="morph-carousel-stage">
+        <div id="carousel-numbers" class="morph-carousel-stage">
             <div class="morph-carousel__shadow"></div>
             <div class="morph-carousel">
                 <div class="morph-carousel__item">1</div>
@@ -60,12 +69,33 @@
 
     </div>
 
+    <div class="container">
+
+        <div id="carousel-words" class="morph-carousel-stage">
+            <div class="morph-carousel__shadow"></div>
+            <div class="morph-carousel">
+                <div class="morph-carousel__item">January</div>
+                <div class="morph-carousel__item">February</div>
+                <div class="morph-carousel__item">March</div>
+                <div class="morph-carousel__item">April</div>
+                <div class="morph-carousel__item">May</div>
+                <div class="morph-carousel__item">June</div>
+                <div class="morph-carousel__item">July</div>
+                <div class="morph-carousel__item">August</div>
+                <div class="morph-carousel__item">October</div>
+                <div class="morph-carousel__item">November</div>
+                <div class="morph-carousel__item">December</div>
+            </div>
+        </div>
+
+    </div>
+
 
     <script type="text/javascript">
         window.addEventListener("load", function load(event){
             window.removeEventListener("load", load, false);
 
-            MorphCarousel( document.getElementById('carousel'), {
+            MorphCarousel( document.getElementById('carousel-numbers'), {
                 onStop: function( itemIndex, el ){
                     console.log('stopped on item # ', itemIndex);
                     console.log('current element: ', el);
@@ -77,6 +107,8 @@
                     console.log('is animating');
                 }
             });
+
+            MorphCarousel( document.getElementById('carousel-words'), {});
         },false);
     </script>
 
