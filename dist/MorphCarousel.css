@@ -7,8 +7,8 @@
 }
 .morph-carousel__shadow {
   position: absolute;
-  left: -2px;
-  right: -2px;
+  left: -4px;
+  right: -4px;
   z-index: 10;
   height: 100%;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 15%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.5) 85%, rgba(0, 0, 0, 0.8) 100%);
