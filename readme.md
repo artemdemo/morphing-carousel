@@ -8,11 +8,16 @@ Morphing carousel, that utilises 3D transformation of CSS3 in order to create "w
 * Hammer.js - http://hammerjs.github.io/
 
 ## Browser support
-Currently supported modern browsers only (about 63% globally):
+Support 89% of the browsers:
 
-* Chrome (desktop and mobile) from version 42
+* Chrome (desktop) from 31
+* Chrome (android) from 42
+* Android Browser from 4.1
 * Firefox 38
-* Edge
+* Opera 30
+* iOS Safari from 7.1
+* Safari from 7.1
+* IE from 10
 
 ## Usage examples
 

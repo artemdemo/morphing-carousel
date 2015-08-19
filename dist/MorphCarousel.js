@@ -59,7 +59,7 @@
 
         for (var i=0, len=itemsList.length; i<len; i++) {
             var _angle = i * minRotateAngle;
-            itemsList[i].style.setProperty('transform', 'rotateY('+ _angle +'deg) translateZ('+ radius +'px)', null);
+            setItemRotation( itemsList[i], _angle, radius );
             itemsList[i].style.width = itemWidth + 'px';
         }
 
@@ -184,7 +184,51 @@
      * @param angle {number} - carousel
      */
     function setRotation( angle ) {
-        carouselEl.style.setProperty('transform', 'rotateY('+ angle +'deg)', null);
+        //carouselEl.style.setProperty('transform', 'rotateY('+ angle +'deg)', null);
+
+        switch (true) {
+            case carouselEl.style.hasOwnProperty('transform'):
+                carouselEl.style.transform = 'rotateY('+ angle +'deg)';
+                break;
+            case carouselEl.style.hasOwnProperty('webkitTransform'):
+                carouselEl.style.webkitTransform = 'rotateY('+ angle +'deg)';
+                break;
+            case carouselEl.style.hasOwnProperty('mozTransform'):
+                carouselEl.style.MozTransform = 'rotateY('+ angle +'deg)';
+                break;
+            case carouselEl.style.hasOwnProperty('oTransform'):
+                carouselEl.style.oTransform = 'rotateY('+ angle +'deg)';
+                break;
+            case carouselEl.style.hasOwnProperty('msTransform'):
+                carouselEl.style.msTransform = 'rotateY('+ angle +'deg)';
+                break;
+        }
+    }
+
+    /**
+     * Set item rotation parameters
+     * @param itemEl
+     * @param y
+     * @param z
+     */
+    function setItemRotation( itemEl, y, z ) {
+        switch (true) {
+            case itemEl.style.hasOwnProperty('transform'):
+                itemEl.style.transform = 'rotateY('+ y +'deg) translateZ('+ z +'px)';
+                break;
+            case itemEl.style.hasOwnProperty('webkitTransform'):
+                itemEl.style.webkitTransform = 'rotateY('+ y +'deg) translateZ('+ z +'px)';
+                break;
+            case itemEl.style.hasOwnProperty('mozTransform'):
+                itemEl.style.MozTransform = 'rotateY('+ y +'deg) translateZ('+ z +'px)';
+                break;
+            case itemEl.style.hasOwnProperty('oTransform'):
+                itemEl.style.oTransform = 'rotateY('+ y +'deg) translateZ('+ z +'px)';
+                break;
+            case itemEl.style.hasOwnProperty('msTransform'):
+                itemEl.style.msTransform = 'rotateY('+ y +'deg) translateZ('+ z +'px)';
+                break;
+        }
     }
 
     function mergeOptions(_options) {
